@@ -1,12 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="app.js"></script>
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tienda - Proyecto JS</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    
+    <div class="container">
+        <main class="main">
+            <header>
+                <div class="logo">Mi Tienda</div>
+                <div>
+                    <button class="btn secondary" id="btn-view-cart">Ver carrito (<span
+                            id="cart-count">0</span>)</button>
+                </div>
+            </header>
+            <section>
+                <h2>Productos</h2>
+                <div id="product-list" class="products">
+
+                </div>
+            </section>
+        </main>
+
+        <aside class="cart" id="cart">
+            <h3>Carrito</h3>
+            <div id="cart-items" class="cart-items">
+                <div class="empty">El carrito está vacío</div>
+            </div>
+
+            <div class="total-row">
+                <div>Subtotal</div>
+                <div id="cart-total">$0.00</div>
+            </div>
+
+            <div style="margin-top:12px; display:flex; gap:8px;">
+                <button class="btn" id="btn-checkout">Pagar</button>
+                <button class="btn secondary" id="btn-clear-cart">Vaciar</button>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        Proyecto JS — Carrito
+    </footer>
+
+    <script src="app.js"></script>
 </body>
+
 </html>
