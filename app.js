@@ -24,6 +24,31 @@
       desc: "Sandalias ligeras para uso diario",
       color: "green",
     },
+    {
+id: "p4",
+      title: "Sandalias Casual",
+      price: 7.75,
+      img: "https://img.kwcdn.com/product/fancy/f2ba7617-2ce9-494c-b8bf-b81173a18b25.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp",
+      desc: "Sandalias ligeras para uso diario",
+      color: "green",
+    },
+    {
+id: "p5",
+      title: "Sandalias Casual",
+      price: 7.75,
+      img: "https://img.kwcdn.com/product/fancy/f2ba7617-2ce9-494c-b8bf-b81173a18b25.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp",
+      desc: "Sandalias ligeras para uso diario",
+      color: "green",
+    },
+ {
+id: "p6",
+      title: "Sandalias Casual",
+      price: 7.75,
+      img: "https://img.kwcdn.com/product/fancy/f2ba7617-2ce9-494c-b8bf-b81173a18b25.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp",
+      desc: "Sandalias ligeras para uso diario",
+      color: "green",
+    },
+
   ];
 
   const qs = (sel) => document.querySelector(sel);
@@ -75,7 +100,6 @@
       `;
       productList.appendChild(el);
     });
-    // listeners
     qsa(".add-to-cart").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         const id = btn.dataset.id;
@@ -165,8 +189,6 @@
         `;
         cartItemsEl.appendChild(node);
       });
-
-      // add listeners for controls
       qsa(".btn-decr").forEach((b) =>
         b.addEventListener("click", () => {
           const id = b.dataset.id;
@@ -191,42 +213,102 @@
         });
       });
     }
-
     const totals = cartTotals();
     cartTotalEl.textContent = formatPrice(totals.total);
     cartCountEl.textContent = totals.count;
   }
-
-  // inicialización
   renderProducts();
   renderCart();
-
-  // botones globales
   btnClear.addEventListener("click", () => {
-    if (confirm("¿Vaciar el carrito?")) clearCart();
-  });
+    if (typeof Toastify === "function") {
+      const node = document.createElement("div");
+      node.style.display = "flex";
+      node.style.alignItems = "center";
+      node.style.gap = "8px";
 
+      const text = document.createElement("span");
+      text.textContent = "¿Vaciar el carrito?";
+      text.style.marginRight = "6px";
+
+      const btnYes = document.createElement("button");
+      btnYes.textContent = "Confirmar";
+      btnYes.style.padding = "6px 8px";
+      btnYes.style.border = "0";
+      btnYes.style.borderRadius = "6px";
+      btnYes.style.background = "#2ecc71";
+      btnYes.style.color = "#fff";
+      btnYes.style.cursor = "pointer";
+      const btnNo = document.createElement("button");
+      btnNo.textContent = "Cancelar";
+      btnNo.style.padding = "6px 8px";
+      btnNo.style.border = "0";
+      btnNo.style.borderRadius = "6px";
+      btnNo.style.background = "#95a5a6";
+      btnNo.style.color = "#fff";
+      btnNo.style.cursor = "pointer";
+      node.appendChild(text);
+      node.appendChild(btnYes);
+      node.appendChild(btnNo);
+      const instance = Toastify({
+        node: node,
+        duration: -1,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true,
+        style: { background: "linear-gradient(to right, #e74c3c, #e67e22)" },
+      });
+      instance.showToast();
+      const toastWrapper = node.parentNode;
+      btnYes.addEventListener("click", (e) => {
+        clearCart();
+        try {
+          if (toastWrapper && toastWrapper.parentNode) toastWrapper.parentNode.removeChild(toastWrapper);
+        } catch (err) {
+        }
+      });
+      btnNo.addEventListener("click", (e) => {
+        try {
+          if (toastWrapper && toastWrapper.parentNode) toastWrapper.parentNode.removeChild(toastWrapper);
+        } catch (err) {
+        }
+      });
+    } else {
+      if (confirm("¿Vaciar el carrito?")) clearCart();
+    }
+  });
   btnCheckout.addEventListener("click", () => {
     const totals = cartTotals();
     if (totals.count === 0) {
-      alert("El carrito está vacío.");
+      if (typeof Toastify === "function") {
+        Toastify({
+          text: "El carrito está vacío.",
+          duration: 3000,
+          close: true,
+          gravity: "top",
+          position: "right",
+          stopOnFocus: true,
+          style: { background: "linear-gradient(to right, #e74c3c, #e67e22)" },
+        }).showToast();
+      }
       return;
     }
-    // Simulación de checkout
-    alert(
-      `Checkout simulado:\nArtículos: ${totals.count}\nTotal: ${formatPrice(
-        totals.total
-      )}`
-    );
-    // opcionalmente vaciar carrito después de pagar:
+    if (typeof Toastify === "function") {
+      Toastify({
+        text: `Checkout simulado: Artículos: ${totals.count} • Total: ${formatPrice(
+          totals.total
+        )}`,
+        duration: 4000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true,
+        style: { background: "linear-gradient(to right, #00b09b, #96c93d)" },
+      }).showToast();
+    }
     clearCart();
   });
-
   btnViewCart.addEventListener("click", () => {
-    // en pantallas pequeñas permite alternar visibilidad
     cartAside.scrollIntoView({ behavior: "smooth" });
   });
-
-  // Exponer algunas funciones para depuración
   window._cart = cart;
 })();
