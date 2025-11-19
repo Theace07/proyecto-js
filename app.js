@@ -274,6 +274,7 @@ id: "p6",
       });
     } else {
       if (confirm("¿Vaciar el carrito?")) clearCart();
+      
     }
   });
   btnCheckout.addEventListener("click", () => {
